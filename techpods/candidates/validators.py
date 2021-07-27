@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 def validate_8char_length(value):
@@ -13,6 +12,6 @@ def validate_alnum(value):
     return True
 
 def validate_float_0_100(value):
-    if MinValueValidator(value) is False and MaxValueValidator(value) is False:
+    if value < 0 or value > 100:
         raise ValidationError(f"{value} should be a float between 0 and 100.")
     return True

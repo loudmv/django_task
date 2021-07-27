@@ -1,42 +1,32 @@
 from django.shortcuts import render
+from django.db import models
 from .models import Candidate, Score
+import pandas as pd
 
 
 def candidate_list(request):
-    candidates = Candidate.objects.all()
+    candidates = Candidate.objects.all().order_by('name')
     scores = Score.objects.all()
 
-    # scores_dict = {}
-    #
-    # for score in scores:
-    #     if score.candidate_reference not in scores_dict:
-    #         scores_dict[score.candidate_reference] = []
-    #     scores_dict[score.candidate_reference].append(score.score)
-    #
-    # return_dict = []
-    #
-    # for candidate in candidates:
-    #     for can_ref, can_scores in scores_dict.items():
-    #         if candidate.candidate_reference == can_ref:
-    #             can_scores_str = ", ".join([str(value) for value in can_scores])
-    #             row = {
-    #                 'name': candidate.name,
-    #                 'candidate_reference': can_ref,
-    #                 'candidate_scores_str': can_scores_str
-    #              }
-    #             return_dict.append(row)
-    # return_dict = []
-    # for candidate in candidates:
-    #     for can_ref, can_scores in scores_dict.items():
-    #         if candidate.candidate_reference == can_ref:
-    #             can_scores_str = ", ".join([str(value) for value in can_scores])
-    #             return_dict.append(
-    #                 f"""
-    #                 <td> {candidate.name} </td>
-    #                 <td> {candidate.candidate_reference} </td>
-    #                 <td> {can_scores_str} </td>
-    #                 """
-    #             )
+    scores_dict = {}
+    for score in scores:
+        if score.candidate_reference not in scores_dict:
+            scores_dict[score.candidate_reference] = []
+        scores_dict[score.candidate_reference].append(score.score)
 
-    scores = "10, 20, 30, 40, 50"
-    return render(request, 'candidates/candidate_list.html', {'candidate_scores': candidates, 'scores': scores})
+    max_value = max(scores_dict.values())
+
+    highlight_rows = []
+    for candidate in candidates:
+        for can_ref, can_scores in scores_dict.items():
+            if candidate.candidate_reference == can_ref:
+                can_scores.sort()
+                can_scores_str = ", ".join([str(value) for value in can_scores])
+                #TODO pretty sure this is not the correct way to do this...
+                candidate.scores = models.CharField(default='N/A')
+                candidate.scores = can_scores_str
+
+                if max_value in can_scores:
+                    highlight_rows.append(candidate.candidate_reference)
+
+    return render(request, 'candidates/candidate_list.html', {'candidate_scores': candidates, 'highlight': highlight_rows})

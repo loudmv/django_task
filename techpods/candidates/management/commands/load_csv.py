@@ -19,13 +19,20 @@ class Command(BaseCommand):
         for index, row in df.iterrows():
             candidate = Candidate()
             score = Score()
+
             try:
                 validate_8char_length(row['candidate_ref'])
                 validate_alnum(row['candidate_ref'])
                 candidate.name = row['name']
                 candidate.candidate_reference = row['candidate_ref']
                 candidate.save()
+            except:
+                pass
+
+            try:
                 validate_float_0_100(row['score'])
+                validate_8char_length(row['candidate_ref'])
+                validate_alnum(row['candidate_ref'])
                 score.candidate_reference = row['candidate_ref']
                 score.score = row['score']
                 score.save()

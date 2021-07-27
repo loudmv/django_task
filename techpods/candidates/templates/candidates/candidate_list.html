@@ -11,10 +11,10 @@
             <td> Reference </td>
             <td> Scores </td>
             {%for candidate in candidate_scores %}
-            <tr>
+            <tr data-delivery=candidate.highest>
                 <td> {{ candidate.name }} </td>
                 <td> {{ candidate.candidate_reference }} </td>
-                <td> {{ scores }} </td>
+                <td> {{ candidate.scores }} </td>
             </tr>
             {% endfor %}
         </table>
