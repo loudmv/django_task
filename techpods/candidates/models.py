@@ -1,10 +1,7 @@
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
 from .validators import validate_8char_length, validate_alnum, validate_float_0_100
 
 
-# Create your models here.
 class Candidate(models.Model):
     name = models.CharField(max_length=100)
     candidate_reference = models.CharField(max_length=8, validators=[validate_8char_length, validate_alnum])
