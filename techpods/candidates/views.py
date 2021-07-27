@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def article_list(request):
+    return render(request, 'candidate/candidate_list.html')
