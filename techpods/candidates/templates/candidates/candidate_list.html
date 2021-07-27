@@ -5,6 +5,18 @@
         <title>Candidates</title>
     </head>
     <body>
-        <h1>Candidates list.</h1>
+        <h1>Candidates list</h1>
+        <table class="articles" border="1" cellpadding="5" cellspacing="5">
+            <td> Names </td>
+            <td> Reference </td>
+            <td> Scores </td>
+            {%for candidate in candidate_scores %}
+            <tr>
+                <td> {{ candidate.name }} </td>
+                <td> {{ candidate.candidate_reference }} </td>
+                <td> {{ scores }} </td>
+            </tr>
+            {% endfor %}
+        </table>
     </body>
 </html>
