@@ -14,19 +14,21 @@ def candidate_list(request):
             scores_dict[score.candidate_reference] = []
         scores_dict[score.candidate_reference].append(score.score)
 
-    max_value = max(scores_dict.values())
+    if scores_dict:
+        max_value = max(scores_dict.values())[0]
 
     highlight_rows = []
-    for candidate in candidates:
-        for can_ref, can_scores in scores_dict.items():
-            if candidate.candidate_reference == can_ref:
-                can_scores.sort()
-                can_scores_str = ", ".join([str(value) for value in can_scores])
-                #TODO pretty sure this is not the correct way to do this...
-                candidate.scores = models.CharField(default='N/A')
-                candidate.scores = can_scores_str
+    if len(candidates) > 0:
+        for candidate in candidates:
+            for can_ref, can_scores in scores_dict.items():
+                if candidate.candidate_reference == can_ref:
+                    can_scores.sort()
+                    can_scores_str = ", ".join([str(value) for value in can_scores])
+                    #TODO pretty sure this is not the correct way to do this...
+                    candidate.scores = models.CharField(default='N/A')
+                    candidate.scores = can_scores_str
 
-                if max_value in can_scores:
-                    highlight_rows.append(candidate.candidate_reference)
+                    if max_value in can_scores:
+                        highlight_rows.append(candidate.candidate_reference)
 
     return render(request, 'candidates/candidate_list.html', {'candidate_scores': candidates, 'highlight': highlight_rows})

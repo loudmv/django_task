@@ -20,6 +20,7 @@ class Command(BaseCommand):
             candidate = Candidate()
             score = Score()
 
+            # ingest the candidates;
             try:
                 validate_8char_length(row['candidate_ref'])
                 validate_alnum(row['candidate_ref'])
@@ -29,6 +30,7 @@ class Command(BaseCommand):
             except:
                 pass
 
+            # ingest the candidate scores;
             try:
                 validate_float_0_100(row['score'])
                 validate_8char_length(row['candidate_ref'])

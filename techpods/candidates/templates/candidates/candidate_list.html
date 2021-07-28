@@ -6,17 +6,25 @@
     </head>
     <body>
         <h1>Candidates list</h1>
-        <table class="articles" border="1" cellpadding="5" cellspacing="5">
-            <td> Names </td>
-            <td> Reference </td>
-            <td> Scores </td>
-            {%for candidate in candidate_scores %}
-            <tr data-delivery=candidate.highest>
-                <td> {{ candidate.name }} </td>
-                <td> {{ candidate.candidate_reference }} </td>
-                <td> {{ candidate.scores }} </td>
-            </tr>
-            {% endfor %}
-        </table>
+        {% if candidate_scores|length > 0 %}
+            <table class="articles" border="1" cellpadding="5" cellspacing="5">
+                <td> Names </td>
+                <td> Reference </td>
+                <td> Scores </td>
+                    {%for candidate in candidate_scores %}
+                        {%if candidate.candidate_reference in highlight %}
+                        <tr bgcolor="yellow">
+                        {% else %}
+                        <tr >
+                        {% endif %}
+                            <td> {{ candidate.name }} </td>
+                            <td> {{ candidate.candidate_reference }} </td>
+                            <td> {{ candidate.scores }} </td>
+                        </tr>
+                    {% endfor %}
+            </table>
+        {% else %}
+            <h3>There are no candidates</h3>
+        {% endif %}
     </body>
 </html>
