@@ -1,6 +1,7 @@
 ### Once you clone the repo, please execute the below commands in order to start the app locally:
 
 1 - python manage.py makemigrations
+
 2 - python manage.py migrate
 3 - python manage.py runserver
 4 - python manage.py createsuperuser - if you want to access the admin panel
