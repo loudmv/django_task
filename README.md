@@ -1,4 +1,4 @@
-#Once you clone the repo, please execute the below commands in order to start the app locally:
+###Once you clone the repo, please execute the below commands in order to start the app locally:
 
 # python manage.py makemigrations
 # python manage.py migrate
