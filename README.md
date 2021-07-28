@@ -1,5 +1,7 @@
 ### Once you clone the repo, please execute the below commands in order to start the app locally:
 
+0 - pip install -r requirements.txt
+
 1 - python manage.py makemigrations
 
 2 - python manage.py migrate
